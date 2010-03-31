@@ -2841,19 +2841,19 @@ class User(_BaseObject):
         info = {}
 
         doc = self._request("user.getInfo", True)
-        info["id"] = _extract(doc, "id")
-        info["name"] = _extract(doc, "name")
-        info["realname"] = _extract(doc, "realname")
-        info["url"] = _extract(doc, "url")
-        info["image"] = _extract(doc, "image")
-        info["country"] = _extract(doc, "country")
-        info["age"] = _extract(doc, "age")
-        info["gender"] = _extract(doc, "gender")
-        info["subscriber"] = _extract(doc, "subscriber")
-        info["playcount"] = _extract(doc, "playcount")
-        info["playlists"] = _extract(doc, "playlists")
-        info["bootstrap"] = _extract(doc, "bootstrap")
-        info["registered"] = _extract(doc, "registered")
+        info[u"id"] = _extract(doc, "id")
+        info[u"name"] = _extract(doc, "name")
+        info[u"realname"] = _extract(doc, "realname")
+        info[u"url"] = _extract(doc, "url")
+        info[u"image"] = _extract(doc, "image")
+        info[u"country"] = _extract(doc, "country")
+        info[u"age"] = _extract(doc, "age")
+        info[u"gender"] = _extract(doc, "gender")
+        info[u"subscriber"] = _extract(doc, "subscriber")
+        info[u"playcount"] = _extract(doc, "playcount")
+        info[u"playlists"] = _extract(doc, "playlists")
+        info[u"bootstrap"] = _extract(doc, "bootstrap")
+        info[u"registered"] = _extract(doc, "registered")
 
         return info
 
