@@ -250,7 +250,7 @@ class Network(object):
     """
     
     def __init__(self, name, homepage, ws_server, api_key, api_secret, session_key, submission_server, username, password_hash,
-                    domain_names, urls):
+                    domain_names, urls, timeout):
         """
             name: the name of the network
             homepage: the homepage url
@@ -284,6 +284,7 @@ class Network(object):
         self.password_hash = password_hash
         self.domain_names = domain_names
         self.urls = urls
+        self.timeout = timeout
         
         self.cache_backend = None
         self.proxy_enabled = False
@@ -457,6 +458,11 @@ class Network(object):
         
         return self.proxy_enabled
 
+    def _get_timeout(self):
+        """Returns timeout."""
+        
+        return self.timeout
+        
     def _get_proxy(self):
         """Returns proxy details."""
         
@@ -578,6 +584,7 @@ def get_lastfm_network(api_key="", api_secret="", session_key = "", username = "
                     submission_server = "http://post.audioscrobbler.com:80/",
                     username = username,
                     password_hash = password_hash,
+                    timeout = 90,
                     domain_names = {
                         DOMAIN_ENGLISH: 'www.last.fm',
                         DOMAIN_GERMAN: 'www.lastfm.de',
@@ -791,11 +798,11 @@ class _Request(object):
         (HOST_NAME, HOST_SUBDIR) = self.network.ws_server
         
         if self.network.is_proxy_enabled():
-            conn = httplib.HTTPConnection(host = self._get_proxy()[0], port = self._get_proxy()[1])
+            conn = httplib.HTTPConnection(host = self.network._get_proxy()[0], port = self.network._get_proxy()[1], timeout = self.network._get_timeout())
             conn.request(method='POST', url="http://" + HOST_NAME + HOST_SUBDIR, 
                 body=data, headers=headers)
         else:
-            conn = httplib.HTTPConnection(host=HOST_NAME)
+            conn = httplib.HTTPConnection(host=HOST_NAME, timeout = self.network._get_timeout())
             conn.request(method='POST', url=HOST_SUBDIR, body=data, headers=headers)
         
         response = conn.getresponse()
